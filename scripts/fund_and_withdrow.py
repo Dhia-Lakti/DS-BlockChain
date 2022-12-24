@@ -1,23 +1,23 @@
-from brownie import FundMe
+from brownie import firstMe
 from scripts.helpful_scripts import get_account
 
 
-def fund():
-    fund_me = FundMe[-1]
+def first():
+    first_me = firstMe[-1]
     account = get_account()
-    entrance_fee = fund_me.getEntranceFee() + 50
+    entrance_fee = first_me.getEntranceFee() + 50
     print(entrance_fee)
     print(f"the current fee is {entrance_fee}")
-    print("funding ...")
-    fund_me.fund({"from": account, "value": entrance_fee})
+    print("firsting ...")
+    first_me.first({"from": account, "value": entrance_fee})
 
 
 def withdrow():
-    fund_me = FundMe[-1]
+    first_me = firstMe[-1]
     account = get_account()
-    fund_me.withdrow({"from": account})
+    first_me.withdrow({"from": account})
 
 
 def main():
-    fund()
+    first()
     withdrow()

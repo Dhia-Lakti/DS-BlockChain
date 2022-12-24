@@ -4,14 +4,14 @@ pragma solidity ^0.6.6;
 import "@chainlink/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol";
 import "@chainlink/contracts/src/v0.6/vendor/SafeMathChainlink.sol";
 
-contract FundMe {
+contract firstContract {
     using SafeMathChainlink for uint256;
 
     AggregatorV3Interface public priceFeed;
 
-    mapping(address => uint256) public addressToAmountFunded;
+    mapping(address => uint256) public addressToAmountfirsted;
     address public owner;
-    address[] public funders;
+    address[] public firsters;
 
     constructor(address _priceFeed) public {
         priceFeed = AggregatorV3Interface(_priceFeed);
@@ -19,14 +19,14 @@ contract FundMe {
     }
 
     //minimum 50$
-    function fund() public payable {
+    function first() public payable {
         uint256 minimumUsd = 1 * 10**18;
         require(
             getConversionRate(msg.value) >= minimumUsd,
             "you need to spend more eth"
         );
-        addressToAmountFunded[msg.sender] += msg.value;
-        funders.push(msg.sender);
+        addressToAmountfirsted[msg.sender] += msg.value;
+        firsters.push(msg.sender);
     }
 
     function getVersion() public view returns (uint256) {
@@ -38,7 +38,7 @@ contract FundMe {
         return uint256(answer * 10000000000);
     }
 
-    function getConversionRate(uint256 ethAmount)
+    function getConversion(uint256 ethAmount)
         public
         view
         returns (uint256)
@@ -64,13 +64,13 @@ contract FundMe {
     function withdrow() public payable onlyOwner {
         msg.sender.transfer(address(this).balance);
         for (
-            uint256 funderIndex = 0;
-            funderIndex < funders.length;
-            funderIndex++
+            uint256 firsterIndex = 0;
+            firsterIndex < firsters.length;
+            firsterIndex++
         ) {
-            address funder = funders[funderIndex];
-            addressToAmountFunded[funder] = 0;
+            address firster = firsters[firsterIndex];
+            addressToAmountfirsted[firster] = 0;
         }
-        funders = new address[](0);
+        firsters = new address[](0);
     }
 }
